@@ -2,6 +2,7 @@ import '@/app/ui/globals.css';
 import { inter } from '@/app/ui/fonts';
 import VideoBackground from "@/app/ui/video-background";
 import Header from "@/app/ui/header";
+import Footer from "@/app/ui/footer";
 
 export default function RootLayout({ children }: {
   children: React.ReactNode;
@@ -14,6 +15,7 @@ export default function RootLayout({ children }: {
         <div className='px-10'>
           <Header />
           {children}
+          <Footer />
         </div>
       </div>
     </body>

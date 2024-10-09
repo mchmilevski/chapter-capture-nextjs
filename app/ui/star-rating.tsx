@@ -16,15 +16,15 @@ const renderStars = (rating: number, size: number) => {
   const stars = []
 
   for (let i = 0; i < filledStars; i++) {
-    stars.push(<Image src={FullStar} width={96} height={96} key={stars.length} alt="Star" className={`h-auto w-${size}`} />)
+    stars.push(<Image src={FullStar} width={size} height={size} key={stars.length} alt="Star" className={`h-auto w-[20]`} />)
   }
 
   if (rating - filledStars > 0) {
-    stars.push(<Image src={HalfStar} width={96} height={96} alt="Star" className={`h-auto w-${size}`} />)
+    stars.push(<Image src={HalfStar} width={size} height={size} alt="Star" className={`h-auto w-${size}`} />)
   }
 
   for (let i = 0; i < unfilledStars; i++) {
-    stars.push(<Image src={EmptyStar} width={96} height={96} key={stars.length} alt="Star" className={`h-auto w-${size}`} />)
+    stars.push(<Image src={EmptyStar} width={size} height={size} key={stars.length} alt="Star" className={`h-auto w-${size}`} />)
   }
 
   return stars
