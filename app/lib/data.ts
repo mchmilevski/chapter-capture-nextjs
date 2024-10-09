@@ -1,14 +1,44 @@
-import { URL } from "@/app/lib/constants";
+import { FiltersInitialState, URL } from '@/app/lib/constants';
+import { Filters } from '@/app/lib/definitions';
+import { getApiUrl } from '@/app/lib/utils';
 
-export async function fetchBooks(search = '', page = 1) {
-  const query = new URLSearchParams({ search, page: String(page) });
-  const res = await fetch(`${URL}/books?${query}`, {
-    cache: 'no-store', // Ensure it doesn't cache and always fetches fresh data
+export async function fetchBooksApi(
+  search = '',
+  page = 1,
+  selectedFilters: Filters = FiltersInitialState,
+) {
+  const { genres, rating, spice, dateRead, language, seasonalVibes } =
+    selectedFilters;
+  const query = new URLSearchParams({
+    search,
+    page: String(page),
+    genres: genres ? genres.join(',') : '',
+    rating: rating !== undefined ? String(rating) : '',
+    spice: spice !== undefined ? String(spice) : '',
+    dateRead: dateRead ? dateRead.toString() : '',
+    language: language || '',
+    seasonalVibes: seasonalVibes || '',
   });
 
-  if (!res.ok) {
+  const books = await fetch(`${URL}/books?${query}`, {
+    cache: 'no-store',
+  });
+
+  if (!books.ok) {
     throw new Error('Failed to fetch books');
   }
 
-  return res.json();
+  return books.json();
+}
+
+export async function fetchGenresApi() {
+  const genres = await fetch(`${URL}/genres`, {
+    cache: 'no-store',
+  });
+
+  if (!genres.ok) {
+    throw new Error('Failed to fetch books');
+  }
+
+  return genres.json();
 }

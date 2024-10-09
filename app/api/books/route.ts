@@ -1,46 +1,63 @@
 import { NextResponse } from 'next/server';
-import connectToDatabase from "@/app/lib/mongoose";
-import Book, {IBook} from "@/app/models/book";
+
+import connectToDatabase from '@/app/lib/mongoose';
+import Book, { IBook } from '@/app/models/book';
 
 export async function GET(request: Request) {
-	try {
-		const { searchParams } = new URL(request.url);
-		const search = searchParams.get('search');
-		const sortField = searchParams.get('sort') || 'finished';
-		const sortOrder = searchParams.get('order') === 'ascending' ? 1 : -1
-		const page = parseInt(searchParams.get('page') || '1', 10);
-		const limit = parseInt(searchParams.get('limit') || '10', 10);
-		const skip = (page - 1) * limit;
+  try {
+    const { searchParams } = new URL(request.url);
+    const search = searchParams.get('search');
+    const sortField = searchParams.get('sort') || 'finished';
+    const sortOrder = searchParams.get('order') === 'ascending' ? 1 : -1;
+    const page = parseInt(searchParams.get('page') || '1', 10);
+    const limit = parseInt(searchParams.get('limit') || '10', 10);
+    const genres = searchParams.get('genres')
+      ? searchParams.get('genres')!.split(',')
+      : [];
+    const skip = (page - 1) * limit;
 
-		let query: any = {}
+    let query: any = {};
 
-		if (search) {
-			query = { $or: [
-					{ title: { $regex: search, $options: 'i' } },
-					{ author: { $regex: search, $options: 'i' } },
-					{seriesName: { $regex: search, $options: 'i' }}
-				]}
-		}
+    if (search) {
+      query = {
+        $or: [
+          { title: { $regex: search, $options: 'i' } },
+          { author: { $regex: search, $options: 'i' } },
+          { seriesName: { $regex: search, $options: 'i' } },
+        ],
+      };
+    }
 
-		await connectToDatabase(); // Connect to MongoDB
+    if (genres.length > 0) {
+      query = {
+        ...query,
+        $and: genres.map((genre) => ({ genres: genre })),
+      };
+    }
 
-		const totalItems = await Book.find({ upcomingReview: false }).countDocuments()
+    await connectToDatabase(); // Connect to MongoDB
 
-		const books: IBook[] = await Book.find(query)
-			.sort({ [sortField]: sortOrder })
-			.skip(skip)
-			.limit(limit + 1)
+    const totalItems = await Book.find({
+      upcomingReview: false,
+    }).countDocuments();
 
-		const returnedBooks = books.slice(0, limit)
+    const books: IBook[] = await Book.find(query)
+      .sort({ [sortField]: sortOrder })
+      .skip(skip)
+      .limit(limit + 1);
 
-		return NextResponse.json({
-			hasNextPage: books.length > returnedBooks.length,
-			totalItems: totalItems,
-			books: returnedBooks
-		});
+    const returnedBooks = books.slice(0, limit);
 
-	} catch (error) {
-		console.error('Error fetching books:', error);
-		return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
-	}
+    return NextResponse.json({
+      hasNextPage: books.length > returnedBooks.length,
+      totalItems: totalItems,
+      books: returnedBooks,
+    });
+  } catch (error) {
+    console.error('Error fetching books:', error);
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 },
+    );
+  }
 }

@@ -1,7 +1,5 @@
-import {
-  MagnifyingGlassIcon,
-  XMarkIcon
-} from '@heroicons/react/24/outline';
+import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import React from 'react';
 
 interface ISearchProps {
   search: string;
@@ -26,5 +24,5 @@ export default function Search({ search, handleSearch }: ISearchProps) {
         />
       )}
     </div>
-  )
+  );
 }

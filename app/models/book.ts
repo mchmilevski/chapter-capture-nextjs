@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document, Model } from 'mongoose';
+import mongoose, { Document, Model, Schema } from 'mongoose';
 
 export interface IBook extends Document {
   title: string;
@@ -33,11 +33,12 @@ const bookSchema: Schema = new Schema({
 
 bookSchema.set('toJSON', {
   transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString()
-    delete returnedObject._id
-    delete returnedObject.__v
-  }
-})
+    returnedObject.id = returnedObject._id.toString();
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
 
-const Book: Model<IBook> = mongoose.models.Book || mongoose.model<IBook>('Book', bookSchema);
+const Book: Model<IBook> =
+  mongoose.models.Book || mongoose.model<IBook>('Book', bookSchema);
 export default Book;

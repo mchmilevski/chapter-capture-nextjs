@@ -1,3 +1,38 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended" // Make sure this is last
+  ],
+  "plugins": ["react-hooks", "simple-import-sort", "import"],
+  "rules": {
+    "semi": ["error", "always"],
+    "quotes": ["error", "single"],
+    "comma-dangle": ["error", "always-multiline"],
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "max-len": ["warn", { "code": 80 }],
+    "no-var": "error",
+    "prefer-const": "error",
+    "eqeqeq": ["error", "always"],
+    "no-unused-vars": "warn",
+    "react/jsx-key": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/explicit-module-boundary-types": "warn",
+    // Simple import sort rules
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+
+    // Optional: Additional rules for import order and consistency
+    "import/order": [
+      "error",
+      {
+        "groups": [["builtin", "external"], ["internal", "parent", "sibling", "index"]],
+        "newlines-between": "always"
+      }
+    ]
+  }
 }
