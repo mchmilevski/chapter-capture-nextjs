@@ -16,7 +16,7 @@ export async function GET(request: Request) {
       : [];
     const skip = (page - 1) * limit;
 
-    let query: any = {};
+    let query = {};
 
     if (search) {
       query = {

@@ -1,17 +1,22 @@
-// app/lib/mongoose.ts
 import mongoose from 'mongoose';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
 if (!MONGODB_URI) {
-  throw new Error('Please define the MONGO_URI environment variable in .env.local');
+  throw new Error(
+    'Please define the MONGODB_URI environment variable in .env.local',
+  );
 }
 
-// Create a global cache to prevent multiple connections in development mode
 declare global {
-  var mongoose: { conn: mongoose.Mongoose | null; promise: Promise<mongoose.Mongoose> | null };
+  // eslint-disable-next-line no-var
+  var mongoose: {
+    conn: mongoose.Mongoose | null;
+    promise: Promise<mongoose.Mongoose> | null;
+  };
 }
 
+// If the global variable has not been set, initialize it
 let cached = global.mongoose;
 
 if (!cached) {
@@ -24,10 +29,11 @@ async function connectToDatabase(): Promise<mongoose.Mongoose> {
   }
 
   if (!cached.promise) {
-    // @ts-ignore
-    cached.promise = mongoose.connect(MONGODB_URI).then((mongoose) => {
-      return mongoose;
-    });
+    cached.promise = mongoose
+      .connect(MONGODB_URI as string)
+      .then((mongoose) => {
+        return mongoose;
+      });
   }
 
   cached.conn = await cached.promise;

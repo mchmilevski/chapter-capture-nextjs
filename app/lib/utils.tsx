@@ -2,8 +2,8 @@ import type { MenuProps } from 'antd';
 import Image from 'next/image';
 import React, { ReactElement } from 'react';
 
-import { Genres, PAGE_LIMIT, SeasonalVibes, URL } from '@/app/lib/constants';
-import { Filters, Genre } from '@/app/lib/definitions';
+import { Genres, SeasonalVibes } from '@/app/lib/constants';
+import { Genre } from '@/app/lib/definitions';
 import Classics from '@/public/icons/genresIcons/classics.png';
 import CozyFantasy from '@/public/icons/genresIcons/cozyFantasy.png';
 import DarkAcademia from '@/public/icons/genresIcons/darkAcademia.png';
@@ -259,41 +259,4 @@ export const seasonalVibesIcons = (seasonalVibes: string) => {
     default:
       return '';
   }
-};
-
-export const getApiUrl = (
-  page: number,
-  search: string,
-  selectedFilters: Filters,
-) => {
-  let url = `${URL}/books?page=${page}&limit=${PAGE_LIMIT}`;
-
-  if (search.length > 0) {
-    url += `&search=${search}`;
-  }
-
-  if (selectedFilters.genres.length > 0) {
-    url += `&genres=${selectedFilters.genres.join(',')}`;
-  }
-
-  if (selectedFilters.rating) {
-    url += `&rating=${selectedFilters.rating}`;
-  }
-
-  if (selectedFilters.spice) {
-    url += `&spice=${selectedFilters.spice}`;
-  }
-  if (selectedFilters.seasonalVibes) {
-    url += `&seasonalVibes=${selectedFilters.seasonalVibes}`;
-  }
-
-  if (selectedFilters.language) {
-    url += `&languageRead=${selectedFilters.language}`;
-  }
-
-  if (selectedFilters.dateRead) {
-    url += `&sort=finished&order=${selectedFilters.dateRead}`;
-  }
-
-  return url;
 };

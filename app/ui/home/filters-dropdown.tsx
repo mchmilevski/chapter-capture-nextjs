@@ -4,14 +4,14 @@ import { Dropdown } from 'antd';
 import React from 'react';
 
 import { Filters as FiltersConstant } from '@/app/lib/constants';
-import { Book, Genre } from '@/app/lib/definitions';
+import { Genre } from '@/app/lib/definitions';
 import { Filters as FiltersType } from '@/app/lib/definitions';
 import { getFiltersDropdownItems } from '@/app/lib/utils';
 
 interface IFiltersProps {
   genres: Genre[];
   selectedFilters: FiltersType;
-  setSelectedFilters: (selectedFilters: FiltersType) => void;
+  setSelectedFilters: (_filters: FiltersType) => void;
 }
 
 export default function FiltersDropdown({

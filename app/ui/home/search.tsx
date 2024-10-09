@@ -3,7 +3,7 @@ import React from 'react';
 
 interface ISearchProps {
   search: string;
-  handleSearch: (search: string) => void;
+  handleSearch: (_filters: string) => void;
 }
 
 export default function Search({ search, handleSearch }: ISearchProps) {

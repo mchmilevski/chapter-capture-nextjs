@@ -40,29 +40,14 @@ export default function BookList({ data }: IDataProps) {
     };
 
     fetch();
-  }, [search]);
+  }, [search, selectedFilters]);
 
   useEffect(() => {
     fetchGenres();
   }, []);
 
-  useEffect(() => {
-    const fetch = async () => {
-      // setLoading(true)
-      const response = await fetchBooksApi(search, 1, selectedFilters);
-
-      // setLoading(false)
-      setBooks([
-        ...response.books.filter((book: Book) => !book.upcomingReview),
-      ]);
-    };
-
-    fetch();
-  }, [selectedFilters]);
-
   const fetchGenres = async () => {
     const genres = await fetchGenresApi();
-    console.log(genres, 'genres');
     setGenres(
       genres.sort((a: Genre, b: Genre) => a.name.localeCompare(b.name)),
     );

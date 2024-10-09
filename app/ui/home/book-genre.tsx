@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
 
 interface IBookGenre {
-  genre: string
+  genre: string;
 }
 
-export default function BookGenre({ genre }: IBookGenre){
-  const genreBgColors:  { [key: string]: string } = {
+export default function BookGenre({ genre }: IBookGenre) {
+  const genreBgColors: { [key: string]: string } = {
     romance: 'bg-genres-romance',
     fantasy: 'bg-genres-fantasy',
     thriller: 'bg-genres-thriller',
@@ -23,10 +23,9 @@ export default function BookGenre({ genre }: IBookGenre){
     ['magical realism']: 'bg-genres-magicalRealism',
     ['dark academia']: 'bg-genres-darkAcademia',
     ['dark romance']: 'bg-genres-darkRomance',
+  };
 
-  }
-
-  const genreTextColors:  { [key: string]: string } = {
+  const genreTextColors: { [key: string]: string } = {
     romance: 'text-genres-romanceText',
     fantasy: 'text-genres-fantasyText',
     thriller: 'text-genres-thrillerText',
@@ -44,7 +43,7 @@ export default function BookGenre({ genre }: IBookGenre){
     ['magical realism']: 'text-genres-magicalRealismText',
     ['dark academia']: 'text-genres-darkAcademiaText',
     ['dark romance']: 'text-genres-darkRomanceText',
-  }
+  };
 
   const genreTranslations: { [key: string]: string } = {
     romance: 'Romance',
@@ -67,11 +66,13 @@ export default function BookGenre({ genre }: IBookGenre){
     ['magical realism']: 'Magical Realism',
     ['dark academia']: 'Dark Academia',
     ['dark romance']: 'Dark Romance',
-  }
+  };
 
   return (
-    <div className={`${genreBgColors[genre]} ${genreTextColors[genre]} rounded-full w-fit px-2 py-1 text-xs mr-2 mt-2`}>
+    <div
+      className={`${genreBgColors[genre]} ${genreTextColors[genre]} rounded-full w-fit px-2 py-1 text-xs mr-2 mt-2`}
+    >
       {genreTranslations[genre]}
     </div>
-  )
+  );
 }

@@ -1,7 +1,8 @@
-"use client"
-import React, { useState, useEffect } from 'react'
-import ReactPlayer from 'react-player'
-import '@/app/ui/globals.css'
+'use client';
+import '@/app/ui/globals.css';
+
+import React, { useEffect, useState } from 'react';
+import ReactPlayer from 'react-player';
 
 export default function VideoBackground() {
   // State to track if the component is mounted
@@ -18,14 +19,12 @@ export default function VideoBackground() {
   }
   return (
     <ReactPlayer
-      className='player'
-      url='rain.mp4'
+      className="player"
+      url="rain.mp4"
       autoPlay
       playing
       loop
       muted
     />
-
-  )
+  );
 }
-

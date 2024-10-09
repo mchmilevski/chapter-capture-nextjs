@@ -6,12 +6,13 @@ import {
   Filters as FiltersConstants,
   FiltersInitialState,
 } from '@/app/lib/constants';
-import { Filters as FiltersType, Genre } from '@/app/lib/definitions';
+import { Filters as FiltersType } from '@/app/lib/definitions';
 import { genresToIcons, seasonalVibesIcons } from '@/app/lib/utils';
 import FullStar from '@/public/icons/star/full-star.png';
+
 interface IFiltersListProps {
   selectedFilters: FiltersType;
-  setSelectedFilters: (selectedFilters: FiltersType) => void;
+  setSelectedFilters: (_filters: FiltersType) => void;
 }
 
 export default function FiltersList({

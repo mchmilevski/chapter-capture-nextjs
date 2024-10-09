@@ -1,6 +1,5 @@
 import { FiltersInitialState, URL } from '@/app/lib/constants';
 import { Filters } from '@/app/lib/definitions';
-import { getApiUrl } from '@/app/lib/utils';
 
 export async function fetchBooksApi(
   search = '',
