@@ -1,4 +1,4 @@
-export const URL = 'http://localhost:3002/api';
+export const URL = 'http://localhost:3000/api';
 export const PAGE_LIMIT = 10;
 
 export const Filters = {

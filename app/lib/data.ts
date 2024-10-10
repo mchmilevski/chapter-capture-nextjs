@@ -8,10 +8,11 @@ export async function fetchBooksApi(
 ) {
   const { genres, rating, spice, dateRead, language, seasonalVibes } =
     selectedFilters;
+
   const query = new URLSearchParams({
     search,
     page: String(page),
-    genres: genres ? genres.join(',') : '',
+    genres: genres.length > 0 ? genres.join(',') : '',
     rating: rating !== undefined ? String(rating) : '',
     spice: spice !== undefined ? String(spice) : '',
     dateRead: dateRead ? dateRead.toString() : '',
@@ -19,25 +20,34 @@ export async function fetchBooksApi(
     seasonalVibes: seasonalVibes || '',
   });
 
-  const books = await fetch(`${URL}/books?${query}`, {
+  const response = await fetch(`${URL}/books?${query}`, {
     cache: 'no-store',
   });
 
-  if (!books.ok) {
+  if (!response.ok) {
     throw new Error('Failed to fetch books');
   }
 
-  return books.json();
+  return response.json();
+}
+
+export async function fetchBookByIdApi(id: string) {
+  const response = await fetch(`${URL}/books/${id}`);
+  if (!response.ok) {
+    throw new Error('Book not found');
+  }
+
+  return response.json();
 }
 
 export async function fetchGenresApi() {
-  const genres = await fetch(`${URL}/genres`, {
+  const response = await fetch(`${URL}/genres`, {
     cache: 'no-store',
   });
 
-  if (!genres.ok) {
+  if (!response.ok) {
     throw new Error('Failed to fetch books');
   }
 
-  return genres.json();
+  return response.json();
 }

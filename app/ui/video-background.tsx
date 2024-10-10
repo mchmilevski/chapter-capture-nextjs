@@ -20,7 +20,8 @@ export default function VideoBackground() {
   return (
     <ReactPlayer
       className="player"
-      url="rain.mp4"
+      url="/rain.mp4"
+      type="video/mp4"
       autoPlay
       playing
       loop
