@@ -3,7 +3,7 @@ import Image from 'next/image';
 import React, { ReactElement } from 'react';
 
 import { Genres, SeasonalVibes } from '@/app/lib/constants';
-import { Genre } from '@/app/lib/definitions';
+import { Filters, Genre } from '@/app/lib/definitions';
 import Classics from '@/public/icons/genresIcons/classics.png';
 import CozyFantasy from '@/public/icons/genresIcons/cozyFantasy.png';
 import DarkAcademia from '@/public/icons/genresIcons/darkAcademia.png';
@@ -267,3 +267,19 @@ export const capitalizeFirstLetter = (text: string) =>
     .split(' ')
     .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
     .join(' ');
+
+export const constructQueryParams = (filters: Filters, search: string) => {
+  const params = new URLSearchParams();
+
+  if (search) params.append('search', search);
+  if (filters.genres.length > 0) {
+    params.append('genres', filters.genres.join(','));
+  }
+  if (filters.rating) params.append('rating', filters.rating.toString());
+  if (filters.spice) params.append('spice', filters.spice.toString());
+  if (filters.dateRead) params.append('dateRead', filters.dateRead);
+  if (filters.language) params.append('language', filters.language);
+  if (filters.seasonalVibes)
+    params.append('seasonalVibes', filters.seasonalVibes);
+  return params.toString();
+};

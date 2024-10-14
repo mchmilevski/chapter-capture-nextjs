@@ -52,3 +52,10 @@ export type Filters = {
   language: string | undefined;
   seasonalVibes: string | undefined;
 };
+
+export interface BookResponse {
+  books: Book[];
+  hasNextPage: boolean;
+  totalItems: number;
+  nextPage: number;
+}
